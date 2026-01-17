@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildBefore18 | My Projects</title>
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #00ff9d;
+            --accent-glow: rgba(0, 255, 157, 0.15);
+            --border: #222;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            overflow-x: hidden;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,255,157,0.08) 0%, rgba(0,0,0,0) 70%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            flex: 1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        .nav-links a.active {
+            font-weight: bold;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-dark);
+            border: 1px solid var(--text-main);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .project-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .project-item:hover {
+            border-color: var(--accent);
+        }
+
+        .p-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+        .p-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            border: 1px solid rgba(0,255,157,0.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="glow"></div>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">BuildBefore18.</a>
+            <div class="nav-links">
+                <a href="explore.html">Explore</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="logs.html">Logs</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </nav>
+
+        <div class="header-row">
+            <h1>My Projects</h1>
+            <button class="btn-primary" id="addProjectBtn">+ New Project</button>
+        </div>
+
+        <div class="project-list" id="projectList">
+            <!-- Example Projects -->
+            <div class="project-item">
+                <div class="p-info">
+                    <h3>Personal Portfolio</h3>
+                    <p>My main showcase website built with HTML/CSS.</p>
+                </div>
+                <span class="status-badge">In Progress</span>
+            </div>
+            <div class="project-item">
+                <div class="p-info">
+                    <h3>Calculator App</h3>
+                    <p>Simple JS calculator with history.</p>
+                </div>
+                <span class="status-badge">Completed</span>
+            </div>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            <p>No projects yet. Start building something!</p>
+        </div>
+
+        <footer>
+            <p>© 2024 BuildBefore18. Plain HTML/CSS/JS.</p>
+        </footer>
+    </div>
+
+    <script>
+        const glow = document.getElementById('glow');
+        const addBtn = document.getElementById('addProjectBtn');
+        const list = document.getElementById('projectList');
+
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        });
+
+        addBtn.addEventListener('click', () => {
+            const name = prompt("Project Name:");
+            if(name) {
+                const desc = prompt("Short Description:") || "No description provided.";
+                
+                const div = document.createElement('div');
+                div.className = 'project-item';
+                div.innerHTML = `
+                    <div class="p-info">
+                        <h3>${name}</h3>
+                        <p>${desc}</p>
+                    </div>
+                    <span class="status-badge">Just Started</span>
+                `;
+                list.prepend(div);
+            }
+        });
+    </script>
+</body>
+</html>

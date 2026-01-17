@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildBefore18 | Home</title>
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #00ff9d;
+            --accent-glow: rgba(0, 255, 157, 0.15);
+            --border: #222;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            overflow-x: hidden;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,255,157,0.08) 0%, rgba(0,0,0,0) 70%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            flex: 1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .hero {
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        button {
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-stack);
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-dark);
+            border: 1px solid var(--text-main);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-main);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .idea-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 0 auto;
+            max-width: 600px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .idea-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .typewriter-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: #151515;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.95);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .modal-backdrop.active .modal {
+            transform: scale(1);
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            color: white;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .modal input:focus {
+            border-color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="glow"></div>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">BuildBefore18.</a>
+            <div class="nav-links">
+                <a href="explore.html">Explore</a>
+                <a href="projects.html">Projects</a>
+                <a href="logs.html">Logs</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>Build Something Every Day.<br>Before 18.</h1>
+            <p class="subtitle">Join the elite community of young makers shipping code, launching products, and learning by doing.</p>
+            
+            <div class="cta-group">
+                <button class="btn-primary" id="joinBtn">Join the Streak</button>
+                <button class="btn-outline" id="ideaBtn">Generate Idea</button>
+            </div>
+
+            <div class="idea-box">
+                <span id="typewriter" class="typewriter-text">// Click 'Generate Idea' to start...</span>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 BuildBefore18. Plain HTML/CSS/JS.</p>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-backdrop" id="modalOverlay">
+        <div class="modal">
+            <h2 style="margin-top: 0;">Commit to the Code</h2>
+            <p style="color: #888;">Enter your name to start your 100-day streak.</p>
+            <input type="text" placeholder="github_username" id="usernameInput">
+            <button class="btn-primary" id="confirmJoin" style="width: 100%;">Start Building</button>
+            <button class="btn-outline" id="closeModal" style="width: 100%; margin-top: 10px; border: none;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const ideas = [
+            "Build a Markdown Editor with live preview.",
+            "Create a CSS-only drawing tool.",
+            "Code a weather dashboard using a public API.",
+            "Design a Pomodoro timer with Spotify integration.",
+            "Make a terminal-style personal website.",
+            "Build a URL shortener service.",
+            "Create a 3D solar system with Three.js."
+        ];
+
+        // Elements
+        const glow = document.getElementById('glow');
+        const joinBtn = document.getElementById('joinBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+        const confirmJoin = document.getElementById('confirmJoin');
+        const ideaBtn = document.getElementById('ideaBtn');
+        const typewriter = document.getElementById('typewriter');
+
+        // Mouse Glow
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        });
+
+        // Modal Logic
+        joinBtn.addEventListener('click', () => modalOverlay.classList.add('active'));
+        const hideModal = () => modalOverlay.classList.remove('active');
+        closeModal.addEventListener('click', hideModal);
+        modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) hideModal(); });
+
+        confirmJoin.addEventListener('click', () => {
+            const input = document.getElementById('usernameInput');
+            if(input.value.trim()) {
+                // Simulate login by redirecting to profile or just changing button
+                joinBtn.innerText = `Welcome, ${input.value}`;
+                joinBtn.disabled = true;
+                joinBtn.style.background = 'var(--accent)';
+                joinBtn.style.color = '#000';
+                hideModal();
+                alert('Welcome to the streak! Check your profile.');
+                window.location.href = 'profile.html';
+            } else {
+                input.style.borderColor = 'red';
+            }
+        });
+
+        // Typewriter Logic
+        let isTyping = false;
+        ideaBtn.addEventListener('click', () => {
+            if(isTyping) return;
+            isTyping = true;
+            const text = ideas[Math.floor(Math.random() * ideas.length)];
+            typewriter.textContent = '> ';
+            let i = 0;
+            const speed = 40; 
+            function type() {
+                if (i < text.length) {
+                    typewriter.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    isTyping = false;
+                    typewriter.innerHTML += '<span style="animation: blink 1s infinite">|</span>';
+                }
+            }
+            type();
+        });
+
+        // Blink animation style
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }`;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

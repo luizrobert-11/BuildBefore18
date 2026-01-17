@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildBefore18 | Dev Logs</title>
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #00ff9d;
+            --accent-glow: rgba(0, 255, 157, 0.15);
+            --border: #222;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            overflow-x: hidden;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,255,157,0.08) 0%, rgba(0,0,0,0) 70%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            flex: 1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        .nav-links a.active {
+            font-weight: bold;
+        }
+
+        .page-header {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .log-input-area {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: var(--font-stack);
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-log {
+            background: var(--text-main);
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-log:hover {
+            background: var(--accent);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            border-left: 2px solid var(--border);
+        }
+
+        .log-entry {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .log-entry::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .log-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .log-content {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="glow"></div>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">BuildBefore18.</a>
+            <div class="nav-links">
+                <a href="explore.html">Explore</a>
+                <a href="projects.html">Projects</a>
+                <a href="logs.html" class="active">Logs</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </nav>
+
+        <div class="page-header">
+            <h1>Daily Logs</h1>
+            <p>Track your progress. One day at a time.</p>
+        </div>
+
+        <div class="log-input-area">
+            <textarea id="logInput" placeholder="What did you ship today?"></textarea>
+            <button class="btn-log" id="submitLog">Log Entry</button>
+        </div>
+
+        <div class="timeline" id="timeline">
+            <!-- Hardcoded Entries -->
+            <div class="log-entry">
+                <div class="log-date">Today</div>
+                <div class="log-content">
+                    Fixed the layout bug on mobile and deployed the landing page v2.
+                </div>
+            </div>
+            <div class="log-entry">
+                <div class="log-date">Yesterday</div>
+                <div class="log-content">
+                    Started learning about CSS Grid and Flexbox. Built a small gallery.
+                </div>
+            </div>
+            <div class="log-entry">
+                <div class="log-date">Oct 24, 2024</div>
+                <div class="log-content">
+                    Configured the development environment and installed Node.js.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 BuildBefore18. Plain HTML/CSS/JS.</p>
+        </footer>
+    </div>
+
+    <script>
+        const glow = document.getElementById('glow');
+        const submitBtn = document.getElementById('submitLog');
+        const input = document.getElementById('logInput');
+        const timeline = document.getElementById('timeline');
+
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        });
+
+        submitBtn.addEventListener('click', () => {
+            if(input.value.trim()) {
+                const div = document.createElement('div');
+                div.className = 'log-entry';
+                // Slide in animation effect
+                div.style.animation = "slideIn 0.3s ease-out";
+                div.innerHTML = `
+                    <div class="log-date">Just now</div>
+                    <div class="log-content">${input.value}</div>
+                `;
+                timeline.prepend(div);
+                input.value = '';
+            }
+        });
+
+        // Add dynamic style for animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateX(-20px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

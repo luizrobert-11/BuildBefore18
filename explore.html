@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildBefore18 | Explore</title>
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #00ff9d;
+            --accent-glow: rgba(0, 255, 157, 0.15);
+            --border: #222;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            overflow-x: hidden;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,255,157,0.08) 0%, rgba(0,0,0,0) 70%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            flex: 1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        .nav-links a.active {
+            font-weight: bold;
+        }
+
+        .page-header {
+            margin: 3rem 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 8px;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-muted);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-main);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .center-btn {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="glow"></div>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">BuildBefore18.</a>
+            <div class="nav-links">
+                <a href="explore.html" class="active">Explore</a>
+                <a href="projects.html">Projects</a>
+                <a href="logs.html">Logs</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </nav>
+
+        <div class="page-header">
+            <h1>Community Showcase</h1>
+            <p style="color: var(--text-muted);">Discover what others are building today.</p>
+        </div>
+
+        <div class="grid" id="projectGrid">
+            <!-- Populated by JS -->
+        </div>
+
+        <div class="center-btn">
+            <button class="btn-outline" id="loadMoreBtn">Load More Projects</button>
+        </div>
+
+        <footer>
+            <p>© 2024 BuildBefore18. Plain HTML/CSS/JS.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Data
+        const initialProjects = [
+            { title: "Retro Chat App", author: "@alex_codes", desc: "A websocket-based chat with 8-bit aesthetic.", tag: "Node.js" },
+            { title: "TaskFlow CLI", author: "@sarah_dev", desc: "Manage your todos directly from the terminal.", tag: "Rust" },
+            { title: "Pixel Canvas", author: "@pixel_art", desc: "Collaborative drawing board for pixel art.", tag: "JS Canvas" },
+            { title: "AI Story Generator", author: "@novelist_ai", desc: "Generate short stories using Markov chains.", tag: "Python" },
+            { title: "Vim Cheat Sheet", author: "@vim_master", desc: "Interactive SVG guide for Vim commands.", tag: "HTML/CSS" },
+            { title: "Music Viz", author: "@audio_wiz", desc: "Real-time audio visualizer in the browser.", tag: "Web Audio API" }
+        ];
+
+        const moreProjects = [
+            { title: "Crypto Tracker", author: "@block_chain", desc: "Real-time dashboard for top 50 coins.", tag: "React" },
+            { title: "Notes AI", author: "@gpt_wrapper", desc: "Auto-summarize your class notes.", tag: "Python" },
+            { title: "Budget Buddy", author: "@fin_tech", desc: "Simple expense tracker for students.", tag: "Vue" }
+        ];
+
+        // Elements
+        const glow = document.getElementById('glow');
+        const projectGrid = document.getElementById('projectGrid');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+        // Mouse Glow
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        });
+
+        // Renderer
+        function createCard(project) {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div class="card-header">
+                    <span>${project.author}</span>
+                    <span>Just now</span>
+                </div>
+                <div class="card-title">${project.title}</div>
+                <div class="card-desc">${project.desc}</div>
+                <div class="tag">${project.tag}</div>
+            `;
+            // Add click interaction
+            div.addEventListener('click', () => {
+                alert(`Viewing project: ${project.title}\nBy: ${project.author}`);
+            });
+            return div;
+        }
+
+        function renderProjects(list) {
+            list.forEach(p => {
+                projectGrid.appendChild(createCard(p));
+            });
+        }
+
+        // Init
+        renderProjects(initialProjects);
+
+        // Load More Interaction
+        loadMoreBtn.addEventListener('click', () => {
+            loadMoreBtn.innerText = "Loading...";
+            loadMoreBtn.style.opacity = "0.7";
+            setTimeout(() => {
+                renderProjects(moreProjects);
+                loadMoreBtn.style.display = 'none';
+            }, 800);
+        });
+    </script>
+</body>
+</html>

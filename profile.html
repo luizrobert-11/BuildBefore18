@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildBefore18 | Profile</title>
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #00ff9d;
+            --accent-glow: rgba(0, 255, 157, 0.15);
+            --border: #222;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            overflow-x: hidden;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,255,157,0.08) 0%, rgba(0,0,0,0) 70%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            flex: 1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        .nav-links a.active {
+            font-weight: bold;
+        }
+
+        /* Profile Specifics */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #222;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .profile-info h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .handle {
+            color: var(--text-muted);
+            font-family: monospace;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bio-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .bio-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .btn-sm {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-sm:hover {
+            color: var(--text-main);
+            border-color: var(--text-main);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="glow"></div>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">BuildBefore18.</a>
+            <div class="nav-links">
+                <a href="explore.html">Explore</a>
+                <a href="projects.html">Projects</a>
+                <a href="logs.html">Logs</a>
+                <a href="profile.html" class="active">Profile</a>
+            </div>
+        </nav>
+
+        <div class="profile-header">
+            <div class="avatar">BB</div>
+            <div class="profile-info">
+                <h1>Builder One</h1>
+                <span class="handle">@builder_one</span>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-value" style="color: var(--accent);">14</span>
+                <span class="stat-label">Day Streak</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">3</span>
+                <span class="stat-label">Projects</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">850</span>
+                <span class="stat-label">Lines Code</span>
+            </div>
+        </div>
+
+        <div class="bio-section">
+            <div class="bio-header">
+                <h3 style="margin:0;">Bio</h3>
+                <button class="btn-sm" onclick="alert('Edit functionality coming soon!')">Edit</button>
+            </div>
+            <p style="color: #ccc; line-height: 1.6;">
+                Full-stack developer in training. Love building UI tools and CLI apps. 
+                Currently learning Rust and WebAssembly. Committed to shipping every day.
+            </p>
+        </div>
+
+        <footer>
+            <p>© 2024 BuildBefore18. Plain HTML/CSS/JS.</p>
+        </footer>
+    </div>
+
+    <script>
+        const glow = document.getElementById('glow');
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        });
+    </script>
+</body>
+</html>
