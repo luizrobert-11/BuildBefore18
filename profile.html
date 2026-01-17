@@ -60,14 +60,8 @@
             padding: 2rem 0;
             border-bottom: 1px solid var(--border);
             margin-bottom: 3rem;
-        }
-<section class="user-notification" id="user-notification">
-  <h2>Welcome!</h2>
-  <p id="streak">Streak: 0 days</p>
-  <p id="projects">Projects Completed: 0</p>
-  <p id="joined">Account Created: --</p>
-</section>
-
+        } 
+        
         .logo {
             font-weight: 800;
             font-size: 1.25rem;
@@ -206,6 +200,15 @@
                 <a href="profile.html" class="active">Profile</a>
             </div>
         </nav>
+<section class="user-notification" id="user-notification">
+  <h2>Welcome!</h2>
+  <p id="streak">Streak: 0 days</p>
+  <p id="projects">Projects Completed: 0</p>
+  <p id="joined">Account Created: --</p>
+</section>
+
+<!-- Optional demo button -->
+<button onclick="addProject('Demo Project')">Add Demo Project</button>
 
         <div class="profile-header">
             <div class="avatar">BB</div>
@@ -255,6 +258,8 @@
             });
         });
     </script>
+<script src="js/script.js" defer></script>
 </body>
 
 </html>
+
